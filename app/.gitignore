@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment
+.env
+*.env.local
+*.env.production
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.pkl
+*.joblib
+*.json
+!app/**/*.json
+!xgBoost/models/*.json
+outputs/
+models/
+
+# Logs
+*.log
+logs/
+
+# Docker
+.dockerignore
+
+# Virtual environment
+venv/
+.venv/
+env/

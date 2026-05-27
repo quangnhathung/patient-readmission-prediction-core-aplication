@@ -1,0 +1,7 @@
+{
+    "xgb_weight": 0.9500000000000003,
+    "lgb_weight": 0.04999999999999971,
+    "optimal_threshold_f2": 0.09425353444612661,
+    "test_ensemble_auc": 0.6238899068725265,
+    "brier_score_loss": 0.0988228211378766
+}

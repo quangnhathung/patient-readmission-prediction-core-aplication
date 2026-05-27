@@ -1,0 +1,34 @@
+*Handle data:
+- column readmitted (nhap vien): 
+chuyen hoa thanh bai toan Binary Classification (Phân lớp nhị phân):
+	<30: 1 (nguy co cao tai nhap vien)
+	>30 || NO: chuyen thanh 0
+- Loc lai du lieu, co nhieu row trung nhau: 101,766 dòng (encounters - số lần nhập viện) nhưng chỉ có 71,518 bệnh nhân độc nhất Nghĩa là 1 người có thể nhập viện nhiều lần chỉ giữ lại lần khám/nhập viện đầu tiên của mỗi bệnh nhân.
+-Bẫy "None" và Missing Value:  Khi đọc file bằng pandas.read_csv() mặc định, Pandas thường ép các chữ "None" thành NaN (giá trị rỗng). Trong bộ dữ liệu này, "None" ở cột A1Cresult và max_glu_serum mang ý nghĩa y khoa cực kỳ quan trọng là "Bác sĩ không chỉ định đo xét nghiệm này". Bạn để Pandas xóa/biến đổi nó là vứt đi một đặc trưng lớn. Thêm nữa, giá trị thiếu thực sự của dataset này được ký hiệu bằng dấu ?.
+
+*Tiền xử lý:
+- Lọc bỏ nhóm bệnh nhân "Bất khả thi": Dựa vào file IDS_mapping.csv, bệnh nhân có discharge_disposition_id mang mã 11, 13, 14, 19, 20, 21 là những người đã tử vong hoặc chuyển vào nhà xác/chăm sóc giảm nhẹ (Hospice). Đã tử vong thì không thể tái nhập viện. Bạn phải loại bỏ các dòng này khỏi tập dữ liệu.
+- Xử lý Missing Values: Cột weight (cân nặng): Dữ liệu khuyết tới ~97% -> Xóa hoàn toàn cột này. Cột payer_code (thiếu ~40%) và medical_specialty (thiếu ~49%) -> Không được xóa, mà hãy điền thành một hạng mục mới là "Missing" hoặc "Unknown"
+- Gom cụm mã Chẩn đoán bệnh (ICD-9 Mapping): 3 cột chẩn đoán diag_1, diag_2, diag_3 chứa gần 1000 mã bệnh lý khác nhau (ví dụ: 428, 250.01). Nếu đem One-hot Encoding, số chiều sẽ phình ra hàng nghìn cột, mô hình sẽ bị "lời nguyền số chiều" (Curse of Dimensionality). Giải pháp: Theo chuẩn bài báo y khoa gốc của bộ dữ liệu này,  cần viết một hàm Python (dùng regex hoặc if-else) gom hàng nghìn mã ICD-9 kia về 9 nhóm bệnh lý chính (Circulatory, Respiratory, Digestive, Diabetes, Injury, Musculoskeletal, Genitourinary, Neoplasms, và Others).
+
+- CÂN BẰNG DỮ LIỆU (Handling Imbalanced Data)
+Sai lầm kinh điển với SMOTE: Hầu hết sinh viên dùng thuật toán SMOTE lên TOÀN BỘ dữ liệu, sau đó mới chia Train/Test. Đây là lỗi cơ bản nghiêm trọng dẫn đến thông tin từ tập Test rò rỉ vào tập Train. Hơn nữa, SMOTE tiêu chuẩn tính toán nội suy sẽ tạo ra dữ liệu lỗi ở các cột phân loại (Categorical) (Ví dụ: Giới tính "Male = 0, Female = 1", SMOTE đẻ ra bệnh nhân có giới tính là 0.45?).
+
+Giải pháp:
+Thứ nhất: Luôn luôn chia train_test_split TRƯỚC TIÊN. Mọi sự cân bằng chỉ được thực hiện trong tập Train.
+
+Thứ hai: Thay vì dùng SMOTE phức tạp, xu hướng ML hiện đại sử dụng tham số thuật toán: Dùng class_weight='balanced' đối với Logistic/Random Forest, và tham số scale_pos_weight đối với thuật toán XGBoost. Thuật toán sẽ tự động phạt lỗi cực nặng nếu mô hình đoán sai bệnh nhân ở class thiểu số. Nó nhanh hơn và chính xác với dữ liệu bảng (Tabular data) hơn sinh dữ liệu ảo.
+
+*MÔ HÌNH HÓA VÀ ĐÁNH GIÁ
+- Logistic Regression (Baseline): Đòi hỏi chuẩn hóa (StandardScaler) và mã hóa toàn bộ biến phân loại.
+
+- Random Forest: Cải thiện việc học các quan hệ phi tuyến tính.
+
+- XGBoost: Đây là "vũ khí hạng nặng" mới nhất. Sử dụng phiên bản XGBoost hỗ trợ trực tiếp Categorical (enable_categorical=True). Nó bỏ qua việc One-Hot encoding nhàm chán và tận dụng cấu trúc cây tốt nhất. Thêm vào đó, hãy sử dụng thư viện Optuna để dò tìm siêu tham số thay cho GridSearchCV quá cũ kĩ và chậm chạp.
+
+* Thước đo:
+Thước đo chuẩn: Dùng Recall (Độ nhạy) - trong y tế, thà bắt nhầm còn hơn bỏ sót, F1-Score và Biểu đồ ROC-AUC.
+
+
+
+
