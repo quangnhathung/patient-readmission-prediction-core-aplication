@@ -1,0 +1,376 @@
+{
+  "numeric_cols": [
+    "time_in_hospital",
+    "num_lab_procedures",
+    "num_procedures",
+    "num_medications",
+    "number_outpatient",
+    "number_emergency",
+    "number_inpatient",
+    "number_diagnoses",
+    "age_numeric",
+    "total_past_visits",
+    "log_inpatient",
+    "treatment_complexity",
+    "lab_to_days_ratio",
+    "num_med_changes",
+    "num_active_meds",
+    "insulin_used",
+    "insulin_changed",
+    "A1C_abnormal",
+    "A1C_tested",
+    "glu_abnormal",
+    "glu_tested",
+    "primary_diag_is_diabetes",
+    "composite_risk"
+  ],
+  "categorical_cols": [
+    "race",
+    "gender",
+    "payer_code",
+    "medical_specialty",
+    "max_glu_serum",
+    "A1Cresult",
+    "metformin",
+    "repaglinide",
+    "nateglinide",
+    "chlorpropamide",
+    "glimepiride",
+    "acetohexamide",
+    "glipizide",
+    "glyburide",
+    "tolbutamide",
+    "pioglitazone",
+    "rosiglitazone",
+    "acarbose",
+    "miglitol",
+    "troglitazone",
+    "tolazamide",
+    "examide",
+    "citoglipton",
+    "insulin",
+    "glyburide-metformin",
+    "glipizide-metformin",
+    "glimepiride-pioglitazone",
+    "metformin-rosiglitazone",
+    "metformin-pioglitazone",
+    "change",
+    "diabetesMed",
+    "discharge_risk_group",
+    "admission_type_group",
+    "admission_source_group",
+    "diag_1_grouped",
+    "diag_2_grouped",
+    "diag_3_grouped"
+  ],
+  "n_features": 60,
+  "n_numeric": 23,
+  "n_categorical": 37,
+  "encoded_categories": {
+    "race": [
+      "AfricanAmerican",
+      "Asian",
+      "Caucasian",
+      "Hispanic",
+      "Missing",
+      "Other"
+    ],
+    "gender": [
+      "Female",
+      "Male",
+      "Unknown/Invalid"
+    ],
+    "payer_code": [
+      "BC",
+      "CH",
+      "CM",
+      "CP",
+      "DM",
+      "FR",
+      "HM",
+      "MC",
+      "MD",
+      "MP",
+      "Missing",
+      "OG",
+      "OT",
+      "PO",
+      "SI",
+      "SP",
+      "UN",
+      "WC"
+    ],
+    "medical_specialty": [
+      "AllergyandImmunology",
+      "Anesthesiology",
+      "Anesthesiology-Pediatric",
+      "Cardiology",
+      "Cardiology-Pediatric",
+      "DCPTEAM",
+      "Dentistry",
+      "Emergency/Trauma",
+      "Endocrinology",
+      "Endocrinology-Metabolism",
+      "Family/GeneralPractice",
+      "Gastroenterology",
+      "Gynecology",
+      "Hematology",
+      "Hematology/Oncology",
+      "Hospitalist",
+      "InfectiousDiseases",
+      "InternalMedicine",
+      "Missing",
+      "Nephrology",
+      "Neurology",
+      "Obsterics&Gynecology-GynecologicOnco",
+      "Obstetrics",
+      "ObstetricsandGynecology",
+      "Oncology",
+      "Ophthalmology",
+      "Orthopedics",
+      "Orthopedics-Reconstructive",
+      "Osteopath",
+      "Otolaryngology",
+      "OutreachServices",
+      "Pathology",
+      "Pediatrics",
+      "Pediatrics-AllergyandImmunology",
+      "Pediatrics-CriticalCare",
+      "Pediatrics-Endocrinology",
+      "Pediatrics-Hematology-Oncology",
+      "Pediatrics-InfectiousDiseases",
+      "Pediatrics-Neurology",
+      "Pediatrics-Pulmonology",
+      "Perinatology",
+      "PhysicalMedicineandRehabilitation",
+      "PhysicianNotFound",
+      "Podiatry",
+      "Proctology",
+      "Psychiatry",
+      "Psychiatry-Addictive",
+      "Psychiatry-Child/Adolescent",
+      "Psychology",
+      "Pulmonology",
+      "Radiologist",
+      "Radiology",
+      "Resident",
+      "Rheumatology",
+      "SportsMedicine",
+      "Surgeon",
+      "Surgery-Cardiovascular",
+      "Surgery-Cardiovascular/Thoracic",
+      "Surgery-Colon&Rectal",
+      "Surgery-General",
+      "Surgery-Maxillofacial",
+      "Surgery-Neuro",
+      "Surgery-Pediatric",
+      "Surgery-Plastic",
+      "Surgery-PlasticwithinHeadandNeck",
+      "Surgery-Thoracic",
+      "Surgery-Vascular",
+      "SurgicalSpecialty",
+      "Urology"
+    ],
+    "max_glu_serum": [
+      ">200",
+      ">300",
+      "Missing",
+      "Norm"
+    ],
+    "A1Cresult": [
+      ">7",
+      ">8",
+      "Missing",
+      "Norm"
+    ],
+    "metformin": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "repaglinide": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "nateglinide": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "chlorpropamide": [
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "glimepiride": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "acetohexamide": [
+      "No"
+    ],
+    "glipizide": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "glyburide": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "tolbutamide": [
+      "No",
+      "Steady"
+    ],
+    "pioglitazone": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "rosiglitazone": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "acarbose": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "miglitol": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "troglitazone": [
+      "No",
+      "Steady"
+    ],
+    "tolazamide": [
+      "No",
+      "Steady"
+    ],
+    "examide": [
+      "No"
+    ],
+    "citoglipton": [
+      "No"
+    ],
+    "insulin": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "glyburide-metformin": [
+      "Down",
+      "No",
+      "Steady",
+      "Up"
+    ],
+    "glipizide-metformin": [
+      "No",
+      "Steady"
+    ],
+    "glimepiride-pioglitazone": [
+      "No",
+      "Steady"
+    ],
+    "metformin-rosiglitazone": [
+      "No",
+      "Steady"
+    ],
+    "metformin-pioglitazone": [
+      "No",
+      "Steady"
+    ],
+    "change": [
+      "Ch",
+      "No"
+    ],
+    "diabetesMed": [
+      "No",
+      "Yes"
+    ],
+    "discharge_risk_group": [
+      "Home",
+      "Other",
+      "Transfer_SNF"
+    ],
+    "admission_type_group": [
+      "Elective",
+      "Emergency",
+      "NULL",
+      "Newborn",
+      "Not_Available",
+      "Not_Mapped",
+      "Trauma",
+      "Urgent"
+    ],
+    "admission_source_group": [
+      "Court_Law",
+      "Emergency_Room",
+      "Other",
+      "Physician_Referral",
+      "Transfer_Hospital"
+    ],
+    "diag_1_grouped": [
+      "Circulatory",
+      "Diabetes",
+      "Digestive",
+      "ExternalCause",
+      "Genitourinary",
+      "Injury",
+      "Mental",
+      "Missing",
+      "Musculoskeletal",
+      "Neoplasm",
+      "Other",
+      "Respiratory",
+      "Supplementary"
+    ],
+    "diag_2_grouped": [
+      "Circulatory",
+      "Diabetes",
+      "Digestive",
+      "ExternalCause",
+      "Genitourinary",
+      "Injury",
+      "Mental",
+      "Missing",
+      "Musculoskeletal",
+      "Neoplasm",
+      "Other",
+      "Respiratory",
+      "Supplementary"
+    ],
+    "diag_3_grouped": [
+      "Circulatory",
+      "Diabetes",
+      "Digestive",
+      "ExternalCause",
+      "Genitourinary",
+      "Injury",
+      "Mental",
+      "Missing",
+      "Musculoskeletal",
+      "Neoplasm",
+      "Other",
+      "Respiratory",
+      "Supplementary"
+    ]
+  }
+}

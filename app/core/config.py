@@ -20,6 +20,11 @@ class Settings(BaseSettings):
     base_dir: Path = Path(__file__).resolve().parent.parent.parent
 
     random_forest_model_path: Path = base_dir / "RandomForest" / "readmission_rf" / "outputs" / "best_rf_model.pkl"
+    random_forest_v2_model_path: Path = base_dir / "RandomForest" / "models" / "random_forest_v2.joblib"
+    random_forest_v2_calibrated_path: Path = base_dir / "RandomForest" / "models" / "calibrated_rf_v2.joblib"
+    random_forest_v2_preprocessor_path: Path = base_dir / "RandomForest" / "models" / "preprocessor_v2.joblib"
+    random_forest_v2_schema_path: Path = base_dir / "RandomForest" / "models" / "model_schema_v2.json"
+    random_forest_v2_metrics_path: Path = base_dir / "RandomForest" / "outputs" / "metrics_v2.json"
 
     xgboost_model_path: Path = base_dir / "xgBoost" / "models" / "calibrated_xgb_v3.joblib"
     xgboost_lgbm_path: Path = base_dir / "xgBoost" / "models" / "calibrated_lgb_v3.joblib"

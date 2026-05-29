@@ -19,7 +19,7 @@ router = APIRouter(prefix="/predict", tags=["Prediction"])
     "/random-forest",
     response_model=SinglePredictionResponse,
     summary="Predict readmission using Random Forest",
-    description="Predicts 30-day hospital readmission risk using the Random Forest model with ADASYN balancing and GridSearchCV tuning. Default threshold is 0.2 (recall-optimized).",
+    description="Predicts 30-day hospital readmission risk using the optimized Random Forest v2 model with feature engineering, OrdinalEncoder, RandomizedSearchCV tuning, and isotonic calibration. Default threshold is 0.17 (F1-optimized).",
 )
 async def predict_random_forest(
     data: PatientData,

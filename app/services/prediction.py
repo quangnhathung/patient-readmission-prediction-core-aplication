@@ -25,8 +25,15 @@ class PredictionService:
         try:
             df = self._df_from_patient(data)
             processed = model_info.preprocessor.preprocess(df)
-            proba = model_info.model.predict_proba(processed)[:, 1][0]
-            thresh = threshold if threshold is not None else 0.2
+
+            if isinstance(model_info.model, dict) and "calibrated" in model_info.model:
+                proba = model_info.model["calibrated"].predict_proba(processed)[:, 1][0]
+                default_thresh = 0.17
+            else:
+                proba = model_info.model.predict_proba(processed)[:, 1][0]
+                default_thresh = 0.2
+
+            thresh = threshold if threshold is not None else default_thresh
             pred = int(proba >= thresh)
             elapsed = (time.time() - start) * 1000
             return SinglePredictionResponse(

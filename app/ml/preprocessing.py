@@ -1,9 +1,15 @@
+import sys
+from pathlib import Path
 from typing import Optional
 
 import numpy as np
 import pandas as pd
 
 from app.ml.features import encode_age, feature_engineering
+
+_rf_src = str(Path(__file__).resolve().parent.parent.parent / "RandomForest")
+if _rf_src not in sys.path:
+    sys.path.insert(0, _rf_src)
 
 
 class BasePreprocessor:
@@ -50,6 +56,20 @@ class RandomForestPreprocessor(BasePreprocessor):
         df_proc = df_proc[numeric_cols]
 
         return df_proc
+
+
+class RandomForestV2Preprocessor(BasePreprocessor):
+    def __init__(self, expected_columns: Optional[list[str]] = None, pipeline=None):
+        super().__init__(expected_columns)
+        self._pipeline = pipeline
+
+    def preprocess(self, df: pd.DataFrame) -> pd.DataFrame:
+        df_fe = feature_engineering(df)
+        if self._pipeline is not None:
+            result = self._pipeline.transform(df_fe)
+            return result
+        df_fe = self.align_columns(df_fe)
+        return df_fe
 
 
 class XGBoostPreprocessor(BasePreprocessor):

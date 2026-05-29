@@ -1,0 +1,89 @@
+# Random Forest v2 Configuration
+experiment_name: "rf_v2"
+version: "2.0"
+seed: 42
+test_size: 0.2
+val_size: 0.2  # from training set
+
+data:
+  path: "RandomForest/data/diabetic_data.csv"
+  id_mapping_path: "RandomForest/data/IDS_mapping.csv"
+  target_col: "readmitted"
+  positive_class: "<30"
+  drop_cols:
+    - "encounter_id"
+    - "patient_nbr"
+    - "weight"
+  exclude_discharge_ids: [11, 13, 14, 19, 20, 21]
+  keep_first_encounter: true
+
+preprocessing:
+  numerical:
+    strategy: "median"
+    scaling: null  # null, "standard", "minmax"
+    clip_outliers: true
+    outlier_multiplier: 1.5
+  categorical:
+    encoding: "ordinal"  # "onehot" or "ordinal"
+    handle_unknown: "use_encoded_value"
+    unknown_value: -1
+  missing:
+    categorical_fill: "Missing"
+
+feature_selection:
+  enabled: false
+  method: "mutual_info"  # "mutual_info", "variance", "correlation", "importance"
+  k_best: 100
+  variance_threshold: 0.01
+  correlation_threshold: 0.95
+
+imbalance:
+  method: "class_weight"  # "class_weight", "smote", "smotenc", "random_under", "balanced_rf"
+  class_weight_mode: "balanced"
+
+tuning:
+  enabled: true
+  method: "randomized_search"  # "randomized_search", "grid_search"
+  n_iter: 30
+  cv_folds: 3
+  scoring: "f1"
+  n_jobs: -1
+  param_distributions:
+    n_estimators: [100, 200, 300, 500]
+    max_depth: [5, 10, 15, 20, 30, null]
+    min_samples_split: [2, 5, 10, 20]
+    min_samples_leaf: [1, 2, 5, 10]
+    max_features: ["sqrt", "log2"]
+    criterion: ["gini", "entropy"]
+    bootstrap: [true, false]
+    class_weight: ["balanced", "balanced_subsample"]
+
+model:
+  random_state: 42
+  n_jobs: -1
+
+calibration:
+  enabled: true
+  method: "isotonic"  # "sigmoid", "isotonic"
+  cv_folds: 5
+
+threshold:
+  optimization: true
+  metric: "f1"  # "f1", "youden", "recall"
+  min_threshold: 0.01
+  max_threshold: 0.99
+  step: 0.01
+
+output:
+  model_dir: "RandomForest/models"
+  output_dir: "RandomForest/outputs"
+  report_dir: "RandomForest/reports"
+  save_preprocessor: true
+  save_calibrated: true
+  save_metrics: true
+  save_charts: true
+  save_schema: true
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
