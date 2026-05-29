@@ -58,6 +58,7 @@ export class DashboardView {
           <div class="models-grid">
             ${this.renderModelCard(MODELS.RANDOM_FOREST)}
             ${this.renderModelCard(MODELS.XGBOOST)}
+            ${this.renderModelCard(MODELS.ENSEMBLE)}
           </div>
         </div>
       </div>

@@ -23,10 +23,11 @@ export class PredictionForm {
         <div class="page-title">Dự đoán tái nhập viện</div>
         <div class="page-subtitle">Nhập thông tin bệnh nhân để dự đoán nguy cơ tái nhập viện trong 30 ngày</div>
 
-        <div class="model-selector" id="modelSelector">
-          ${this.renderModelOption(MODELS.RANDOM_FOREST, true)}
-          ${this.renderModelOption(MODELS.XGBOOST, false)}
-        </div>
+          <div class="model-selector" id="modelSelector">
+            ${this.renderModelOption(MODELS.RANDOM_FOREST, true)}
+            ${this.renderModelOption(MODELS.XGBOOST, false)}
+            ${this.renderModelOption(MODELS.ENSEMBLE, false)}
+          </div>
 
         <div class="card">
           <div class="card-header">

@@ -5,9 +5,14 @@ export class PredictionResult {
     this.container = container;
   }
 
+  _isEnsemble(modelName) {
+    return modelName && modelName.toLowerCase().includes('ensemble');
+  }
+
   render(prediction, latency) {
     const risk = Formatters.riskLevel(prediction.probability, prediction.threshold);
     const barClass = Formatters.probabilityBarClass(prediction.probability);
+    const isEnsemble = this._isEnsemble(prediction.model_name);
 
     this.container.innerHTML = `
       <div class="result-card">
@@ -18,6 +23,13 @@ export class PredictionResult {
           </div>
           <span class="result-risk-badge ${risk.class}">${risk.level}</span>
         </div>
+
+        ${isEnsemble ? `
+        <div class="ensemble-badge">
+          <span class="ensemble-badge-icon">&#128279;</span>
+          Stacking Ensemble &mdash; Kết hợp trung bình xác suất từ Random Forest và XGBoost
+        </div>
+        ` : ''}
 
         <div class="result-probability">
           <div class="result-probability-label">

@@ -1,21 +1,25 @@
 export const MODELS = {
   RANDOM_FOREST: 'random-forest',
   XGBOOST: 'xgboost',
+  ENSEMBLE: 'ensemble',
 };
 
 export const MODEL_LABELS = {
   [MODELS.RANDOM_FOREST]: 'Random Forest',
   [MODELS.XGBOOST]: 'XGBoost Ensemble',
+  [MODELS.ENSEMBLE]: 'Stacking Ensemble',
 };
 
 export const MODEL_ICONS = {
   [MODELS.RANDOM_FOREST]: '\uD83C\uDF33',
   [MODELS.XGBOOST]: '\u26A1',
+  [MODELS.ENSEMBLE]: '\uD83D\uDD17',
 };
 
 export const MODEL_DESCRIPTIONS = {
-  [MODELS.RANDOM_FOREST]: 'Random Forest với ADASYN balancing và GridSearchCV tuning. Ngưỡng mặc định: 0.2 (tối ưu recall).',
-  [MODELS.XGBOOST]: 'Kết hợp XGBoost + LightGBM với hiệu chuẩn isotonic. Sử dụng ngưỡng tối ưu F2.',
+  [MODELS.RANDOM_FOREST]: 'Random Forest v2 với feature engineering, RandomizedSearchCV tuning, và hiệu chuẩn isotonic. Ngưỡng mặc định: 0.17 (tối ưu F1).',
+  [MODELS.XGBOOST]: 'Kết hợp XGBoost + LightGBM với hiệu chuẩn isotonic. Sử dụng ngưỡng tối ưu F2 (~0.094).',
+  [MODELS.ENSEMBLE]: 'Kết hợp trung bình xác suất từ Random Forest và XGBoost. Tận dụng ưu điểm của cả hai mô hình để dự đoán ổn định hơn. Ngưỡng mặc định: 0.2.',
 };
 
 export const RISK_LEVELS = {
@@ -145,11 +149,12 @@ export const A1C_RESULT_OPTIONS = [
   { value: '>8', label: '> 8%' },
 ];
 
-export const THRESHOLD_PRESETS = [0.2, 0.3, 0.5, 0.7, 0.8];
+export const THRESHOLD_PRESETS = [0.1, 0.15, 0.2, 0.3, 0.5];
 
 export const API_PATHS = {
   PREDICT_RANDOM_FOREST: '/api/v1/predict/random-forest',
   PREDICT_XGBOOST: '/api/v1/predict/xgboost',
+  PREDICT_ENSEMBLE: '/api/v1/predict/ensemble',
   HEALTH: '/api/v1/health',
   DOCS: '/docs',
 };

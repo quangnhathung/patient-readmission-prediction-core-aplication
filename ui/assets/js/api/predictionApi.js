@@ -22,10 +22,15 @@ export class PredictionApi {
     return this.client.post(endpoint, data);
   }
 
+  async predictEnsemble(data) {
+    return this.client.post(API_PATHS.PREDICT_ENSEMBLE, data);
+  }
+
   async predict(model, data, threshold) {
     const modelMap = {
-      'random-forest': this.predictRandomForest.bind(this),
-      'xgboost': this.predictXGBoost.bind(this),
+      'random-forest': (d, t) => this.predictRandomForest(d, t),
+      'xgboost': (d, t) => this.predictXGBoost(d, t),
+      'ensemble': (d) => this.predictEnsemble(d),
     };
 
     const predictFn = modelMap[model];

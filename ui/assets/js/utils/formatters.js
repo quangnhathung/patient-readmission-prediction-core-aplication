@@ -16,7 +16,11 @@ export class Formatters {
     const map = {
       'random-forest': 'Random Forest',
       'xgboost': 'XGBoost Ensemble',
+      'ensemble': 'Stacking Ensemble',
       'random_forest': 'Random Forest',
+      'Ensemble (Random Forest + XGBoost)': 'Stacking Ensemble',
+      'Random Forest v2': 'Random Forest',
+      'XGBoost Ensemble': 'XGBoost Ensemble',
     };
     return map[name] || name;
   }

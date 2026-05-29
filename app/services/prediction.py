@@ -128,7 +128,10 @@ class PredictionService:
         results = []
         for patient in patients:
             try:
-                resp = predict_fn[model_name](patient, threshold)
+                if model_name == "ensemble":
+                    resp = predict_fn[model_name](patient)
+                else:
+                    resp = predict_fn[model_name](patient, threshold)
                 results.append(resp)
             except Exception as e:
                 elapsed = (time.time() - start) * 1000
